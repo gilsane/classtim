@@ -72,24 +72,26 @@ if df is not None:
     st.write("### User Input Form")
     col1, col2 = st.columns(2)
 
-    with col1:
-        st.write("**Categorical Features**")
-        cat_inputs = {}
-        if hasattr(model, 'cat_names') and model.cat_names:
-            for cat in model.cat_names:
-                if cat in df.columns:
-                    cat_inputs[cat] = st.selectbox(f"{cat}", options=df[cat].unique())
+    if isinstance(model, dict):  # 모델이 딕셔너리인지 확인
+        with col1:
+            st.write("**Categorical Features**")
+            cat_inputs = {}
+            if "cat_names" in model and model["cat_names"]:
+                for cat in model["cat_names"]:
+                    if cat in df.columns:
+                        cat_inputs[cat] = st.selectbox(f"{cat}", options=df[cat].unique())
 
-    with col2:
-        st.write("**Continuous Features**")
-        cont_inputs = {}
-        if hasattr(model, 'cont_names') and model.cont_names:
-            for cont in model.cont_names:
-                if cont in df.columns:
-                    cont_inputs[cont] = st.text_input(f"{cont}", value="", placeholder="Enter a number")
+        with col2:
+            st.write("**Continuous Features**")
+            cont_inputs = {}
+            if "cont_names" in model and model["cont_names"]:
+                for cont in model["cont_names"]:
+                    if cont in df.columns:
+                        cont_inputs[cont] = st.text_input(f"{cont}", value="", placeholder="Enter a number")
 
-    st.write("### User Inputs Summary")
-    st.write({"Categorical Inputs": cat_inputs, "Continuous Inputs": cont_inputs})
-    
+        st.write("### User Inputs Summary")
+        st.write({"Categorical Inputs": cat_inputs, "Continuous Inputs": cont_inputs})
+    else:
+        st.error("The loaded model is not in the expected dictionary format.")
 
 
