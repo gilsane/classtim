@@ -24,15 +24,3 @@ except Exception:
 st.dataframe(df.head()) 
 
 @st.cache_data
-output = "model.pkl"
-gdown.download(url, output, quiet=False)
-
-try:
-    with open(output, 'rb') as f:
-        model_metadata = pickle.load(f)
-    model = model_metadata
-except Exception as e:
-    raise ValueError(f"Scikit-learn 모델 로드 실패: {e}")
-else:
-    raise ValueError(f"알 수 없는 모델 타입: {model_type}")
-
