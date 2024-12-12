@@ -23,7 +23,7 @@ except Exception:
 
 st.dataframe(df.head()) 
 
-@st.cache(allow_output_mutation=True)
+@st.cache_data
 output = "model.pkl"
 gdown.download(url, output, quiet=False)
 
