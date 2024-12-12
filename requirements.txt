@@ -10,3 +10,5 @@ fastbook
 Pillow
 gdown
 opencv-python-headless
+xgboost
+requests
