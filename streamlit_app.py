@@ -77,7 +77,7 @@ if df is not None:
         with col1:
             st.write("**Categorical Features**")
             cat_inputs = {}
-            if "cat_names" in model and model["cat_names"]:
+            if model["cat_names"]:
                 for cat in model["cat_names"]:
                     if cat in df.columns:
                         cat_inputs[cat] = st.selectbox(f"{cat}", options=df[cat].unique())
@@ -85,7 +85,7 @@ if df is not None:
         with col2:
             st.write("**Continuous Features**")
             cont_inputs = {}
-            if "cont_names" in model and model["cont_names"]:
+            if model["cont_names"]:
                 for cont in model["cont_names"]:
                     if cont in df.columns:
                         cont_inputs[cont] = st.text_input(f"{cont}", value="", placeholder="Enter a number")
