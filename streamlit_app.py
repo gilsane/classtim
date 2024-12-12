@@ -10,6 +10,7 @@ st.title("Model Metadata Viewer")
 GDRIVE_ID = "1-0DMaWxpfuZwR7u8X65dnL01UK4Paiaj"
 MODEL_TYPE = "fastai"  # "fastai", "scikit-learn Random Forest", or "XGBoost"
 
+@st.cache(allow_output_mutation=True)
 # Google Drive에서 파일 다운로드 및 로드
 def download_and_load_model(gdrive_id):
     try:
