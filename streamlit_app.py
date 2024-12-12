@@ -7,8 +7,8 @@ from fastai.learner import load_learner
 st.title("Model Metadata Viewer")
 
 # GitHub Raw 파일 URL과 모델 유형
-GITHUB_RAW_URL = "https://github.com/gilsane/classtim/raw/refs/heads/main/regression_model_fastai.pkl"
-MODEL_TYPE = "fastai"  # "fastai", "scikit-learn Random Forest", or "XGBoost"
+GITHUB_RAW_URL = "https://github.com/gilsane/classtim/raw/refs/heads/main/xgb_model.pkl"
+MODEL_TYPE = "XGBoost"  # "fastai", "scikit-learn Random Forest", or "XGBoost"
 
 # GitHub에서 파일 다운로드 및 로드
 def download_model(url, output_path="model.pkl"):
