@@ -1,30 +1,30 @@
 import streamlit as st
 import pickle
-import gdown
+import requests
 
 
 # Streamlit 제목
 st.title("Model Metadata Viewer")
 
-# Google Drive ID와 모델 유형
-GDRIVE_ID = "1-0DMaWxpfuZwR7u8X65dnL01UK4Paiaj"
+# GitHub Raw 파일 URL과 모델 유형
+GITHUB_RAW_URL = "https://github.com/gilsane/classtim/raw/refs/heads/main/regression_model(fastai)%20(1).pkl"
 MODEL_TYPE = "fastai"  # "fastai", "scikit-learn Random Forest", or "XGBoost"
 
-@st.cache_data
-# Google Drive에서 파일 다운로드 및 로드
-def download_and_load_model(gdrive_id):
+# GitHub에서 파일 다운로드 및 로드
+def download_and_load_model(url):
     try:
-        url = f"https://drive.google.com/uc?id={gdrive_id}"
-        output = "model.pkl"
-        gdown.download(url, output, quiet=False)
-        with open(output, "rb") as file:
+        response = requests.get(url)
+        response.raise_for_status()
+        with open("model.pkl", "wb") as file:
+            file.write(response.content)
+        with open("model.pkl", "rb") as file:
             return pickle.load(file)
     except Exception as e:
         st.error(f"Error loading model: {e}")
         return None
 
 # 모델 로드
-model = download_and_load_model(GDRIVE_ID)
+model = download_and_load_model(GITHUB_RAW_URL)
 
 if model is not None:
     st.success("Model loaded successfully!")
