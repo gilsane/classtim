@@ -99,10 +99,10 @@ if df is not None:
         try:
             # 입력 데이터 준비
             input_data = []
-            for cat in model.cat_names:
+            for cat in model["cat_names"]:
                 if cat in cat_inputs:
                     input_data.append(cat_inputs[cat])
-            for cont in model.cont_names:
+            for cont in model["cont_names"]:
                 if cont in cont_inputs:
                     input_data.append(float(cont_inputs[cont]))  # 숫자로 변환
 
