@@ -33,7 +33,7 @@ try:
         model_metadata = pickle.load(f)
     model = model_metadata
 except Exception as e:
-    raise ValueError(f"Scikit-learn 모델 로드 실패: {e}")
+    raise ValueError(f"Scikit-learn 모델 로드 실패")
 else:
     raise ValueError("알 수 없는 모델 타입")
 
