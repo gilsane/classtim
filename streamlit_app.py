@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import gdown
 
 #csv 데이터 파일 경로(Github) 및 모델 파일 경로(Google Drive) 설정
 
