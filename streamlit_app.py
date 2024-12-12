@@ -104,16 +104,23 @@ if df is not None:
             input_data = []
             for cat in model["cat_names"]:
                 if cat in cat_inputs:
-                    input_data.append(cat_inputs[cat])
+                    category = cat_inputs[cat].value
+                    encoded_value = categorify_maps[cat].o2i[category]  # 인코딩된 값 가져오기
+                    input_data.append(encoded_value)
+                    
             for cont in model["cont_names"]:
                 if cont in cont_inputs:
-                    input_data.append(float(cont_inputs[cont]))  # 숫자로 변환
-
-            # 입력 데이터를 numpy 배열로 변환
-            input_array = np.array([input_data])
+                    raw_value = cont_inputs[cont].value
+                    mean = normalization_info[cont]["mean"]
+                    std = normalization_info[cont]["std"]
+                    normalized_value = (raw_value - mean) / std  # 정규화 수행
+                    input_data.append(normalized_value)
 
             # 예측 수행
-            prediction = model["model"].predict(input_array)[0]
+    
+            columns = cat_names + cont_names  # 열 이름 설정
+            input_df = pd.DataFrame([input_data], columns=columns)  # DataFrame으로 변환
+            prediction = rf_model.predict(input_df)[0]
 
             # 결과 출력
             y_name = model.get("y_names", ["Prediction"])[0]
