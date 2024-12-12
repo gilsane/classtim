@@ -104,13 +104,13 @@ if df is not None:
             input_data = []
             for cat in model["cat_names"]:
                 if cat in cat_inputs:
-                    category = cat_inputs[cat].value
+                    category = cat_inputs[cat]
                     encoded_value = categorify_maps[cat].o2i[category]  # 인코딩된 값 가져오기
                     input_data.append(encoded_value)
                     
             for cont in model["cont_names"]:
                 if cont in cont_inputs:
-                    raw_value = cont_inputs[cont].value
+                    raw_value = float(cont_inputs[cont])
                     mean = normalization_info[cont]["mean"]
                     std = normalization_info[cont]["std"]
                     normalized_value = (raw_value - mean) / std  # 정규화 수행
