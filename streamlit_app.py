@@ -77,7 +77,7 @@ if df is not None:
         with col1:
             st.write("**Categorical Features**")
             cat_inputs = {}
-            if model["cat_names"]:
+            if "cat_names" in model and model["cat_names"]:
                 for cat in model["cat_names"]:
                     if cat in df.columns:
                         cat_inputs[cat] = st.selectbox(f"{cat}", options=df[cat].unique())
@@ -85,7 +85,7 @@ if df is not None:
         with col2:
             st.write("**Continuous Features**")
             cont_inputs = {}
-            if model["cont_names"]:
+            if "cont_names" in model and model["cont_names"]:
                 for cont in model["cont_names"]:
                     if cont in df.columns:
                         cont_inputs[cont] = st.text_input(f"{cont}", value="", placeholder="Enter a number")
@@ -97,36 +97,35 @@ if df is not None:
 
 
 
-    # 예측 버튼 및 결과 출력
-    if st.button("Predict"):
-        try:
-            # 입력 데이터 준비
-            input_data = []
-            for cat in model["cat_names"]:
-                if cat in cat_inputs:
-                    category = cat_inputs[cat]
-                    encoded_value = model["categorify_maps"][cat].o2i[category]
-                    input_data.append(encoded_value)
-                    
-            for cont in model["cont_names"]:
-                if cont in cont_inputs:
-                    raw_value = float(cont_inputs[cont])
-                    mean = model["normalize"][cont]["mean"]
-                    std = model["normalize"][cont]["std"]
-                    normalized_value = (raw_value - mean) / std  # 정규화 수행
-                    input_data.append(normalized_value)
+# 예측 버튼 및 결과 출력
+if st.button("Predict"):
+    try:
+        # 입력 데이터 준비
+        input_data = []
 
-            # 예측 수행
-    
-            columns = cat_names + cont_names  # 열 이름 설정
-            input_df = pd.DataFrame([input_data], columns=columns)  # DataFrame으로 변환
-            prediction = rf_model.predict(input_df)[0]
+        # 범주형 데이터 인코딩
+        for cat in model["cat_names"]:  # 메타데이터에서 cat_names 가져오기
+            if cat in cat_inputs:
+                category = cat_inputs[cat]
+                encoded_value = model["categorify_maps"][cat].o2i[category]  # 인코딩된 값 가져오기
+                input_data.append(encoded_value)
 
-            # 결과 출력
-            y_name = model.get("y_names", ["Prediction"])[0]
-            st.success(f"{y_name}: {prediction}")
-        except Exception as e:
-            st.error(f"Error during prediction: {e}")
+        # 연속형 데이터 정규화
+        for cont in model["cont_names"]:  # 메타데이터에서 cont_names 가져오기
+            if cont in cont_inputs:
+                raw_value = float(cont_inputs[cont])  # 입력값을 float으로 변환
+                mean = model["normalize"][cont]["mean"]
+                std = model["normalize"][cont]["std"]
+                normalized_value = (raw_value - mean) / std  # 정규화 수행
+                input_data.append(normalized_value)
 
+        # 예측 수행
+        columns = model["cat_names"] + model["cont_names"]  # 열 이름 설정
+        input_df = pd.DataFrame([input_data], columns=columns)  # DataFrame으로 변환
+        prediction = model["model"].predict(input_df)[0]
 
-
+        # 결과 출력
+        y_name = model.get("y_names", ["Prediction"])[0]
+        st.success(f"{y_name}: {prediction}")
+    except Exception as e:
+        st.error(f"Error during prediction: {e}")
