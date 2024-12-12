@@ -34,5 +34,5 @@ try:
 except Exception as e:
     raise ValueError(f"Scikit-learn 모델 로드 실패: {e}")
 else:
-raise ValueError(f"알 수 없는 모델 타입: {model_type}")
+    raise ValueError(f"알 수 없는 모델 타입: {model_type}")
 
