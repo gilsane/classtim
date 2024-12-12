@@ -3,6 +3,7 @@ import pickle
 import requests
 from fastai.learner import load_learner
 import pandas as pd
+import numpy as np  # numpy를 import해야 함
 
 # Streamlit 제목
 st.title("Model Metadata Viewer")
@@ -94,6 +95,8 @@ if df is not None:
     else:
         st.error("The loaded model is not in the expected dictionary format.")
 
+
+
     # 예측 버튼 및 결과 출력
     if st.button("Predict"):
         try:
@@ -106,8 +109,11 @@ if df is not None:
                 if cont in cont_inputs:
                     input_data.append(float(cont_inputs[cont]))  # 숫자로 변환
 
+            # 입력 데이터를 numpy 배열로 변환
+            input_array = np.array([input_data])
+
             # 예측 수행
-            prediction = model["model"].predict([input_data])[0]
+            prediction = model["model"].predict(input_array)[0]
 
             # 결과 출력
             y_name = model.get("y_names", ["Prediction"])[0]
