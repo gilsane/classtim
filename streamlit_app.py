@@ -22,5 +22,3 @@ except Exception:
                 st.write("모델을 읽어올 수 없습니다. 모델 파일 정보를 다시 한번 확인해주세요")
 
 st.dataframe(df.head()) 
-
-@st.cache_data
