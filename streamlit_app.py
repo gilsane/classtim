@@ -8,6 +8,7 @@ import numpy as np  # numpy를 import해야 함
 # Streamlit 제목
 st.title("주택 가격 예측 서비스!")
 
+
 # GitHub Raw 파일 URL과 모델 유형
 GITHUB_RAW_URL = "https://github.com/gilsane/classtim/raw/refs/heads/main/xgb_model%20(1).pkl"
 MODEL_TYPE = "XGBoost"  # "fastai", "scikit-learn Random Forest", or "XGBoost"
@@ -94,7 +95,7 @@ if df is not None:
         st.error("The loaded model is not in the expected dictionary format.")
 
 
-
+prediction = 0 
 # 예측 버튼 및 결과 출력
 if st.button("Predict"):
     try:
@@ -130,7 +131,7 @@ if st.button("Predict"):
 
 
 # 예측 결과에 따라 콘텐츠 표시
-if prediction:
+if prediction!=0:
     if prediction <= 60000:
         st.write("### Prediction Result: Low Price Segment")
         col1, col2, col3 = st.columns(3)
