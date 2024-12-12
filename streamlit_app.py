@@ -50,11 +50,7 @@ def load_csv_with_encodings(url):
     st.error("Failed to load CSV file with supported encodings.")
     return None        
 
-# CSV 파일 로드 및 출력
-df = load_csv_with_encodings(CSV_FILE_URL)
-if df is not None:
-    st.write("### Data Preview")
-    st.dataframe(df.head())
+
 
 # 모델 다운로드 및 로드
 downloaded_file = download_model(GITHUB_RAW_URL)
@@ -66,6 +62,34 @@ else:
 if model is not None:
     st.success("Model loaded successfully!")
 
+# CSV 파일 로드 및 출력
+df = load_csv_with_encodings(CSV_FILE_URL)
+if df is not None:
+    st.write("### Data Preview")
+    st.dataframe(df.head())
+
+    # 사용자 입력 레이아웃 생성
+    st.write("### User Input Form")
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.write("**Categorical Features**")
+        cat_inputs = {}
+        if hasattr(model, 'cat_names') and model.cat_names:
+            for cat in model.cat_names:
+                if cat in df.columns:
+                    cat_inputs[cat] = st.selectbox(f"{cat}", options=df[cat].unique())
+
+    with col2:
+        st.write("**Continuous Features**")
+        cont_inputs = {}
+        if hasattr(model, 'cont_names') and model.cont_names:
+            for cont in model.cont_names:
+                if cont in df.columns:
+                    cont_inputs[cont] = st.text_input(f"{cont}", value="", placeholder="Enter a number")
+
+    st.write("### User Inputs Summary")
+    st.write({"Categorical Inputs": cat_inputs, "Continuous Inputs": cont_inputs})
     
 
 
