@@ -111,8 +111,8 @@ if df is not None:
             for cont in model["cont_names"]:
                 if cont in cont_inputs:
                     raw_value = float(cont_inputs[cont])
-                    mean = normalization_info[cont]["mean"]
-                    std = normalization_info[cont]["std"]
+                    mean = model["normalize"][cont]["mean"]
+                    std = model["normalize"][cont]["std"]
                     normalized_value = (raw_value - mean) / std  # 정규화 수행
                     input_data.append(normalized_value)
 
