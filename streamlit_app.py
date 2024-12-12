@@ -39,7 +39,7 @@ if model is not None:
         }
     elif MODEL_TYPE == "scikit-learn Random Forest":
         meta_data = {
-            "model": model,
+            "model": model.get("model", None),  # 모델의 핵심 내용
             "cat_names": model.get("cat_names", []),  # 모델 내 저장된 cat_names 사용
             "cont_names": model.get("cont_names", []),  # 모델 내 저장된 cont_names 사용
             "y_names": model.get("y_names", []),  # 모델 내 저장된 y_names 사용
@@ -47,15 +47,12 @@ if model is not None:
         }
     elif MODEL_TYPE == "XGBoost":
         meta_data = {
-            "model": model,
+            "model": model.get("model", None),  # 모델의 핵심 내용
             "cat_names": model.get("cat_names", []),  # 모델 내 저장된 cat_names 사용
             "cont_names": model.get("cont_names", []),  # 모델 내 저장된 cont_names 사용
             "y_names": model.get("y_names", []),  # 모델 내 저장된 y_names 사용
             "procs": model.get("procs", [])  # 모델 내 저장된 procs 사용
         }
-    else:
-        st.error("Unsupported model type.")
-        meta_data = None
 
     # 메타 데이터 출력
     if meta_data:
