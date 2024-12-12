@@ -40,18 +40,18 @@ if model is not None:
     elif MODEL_TYPE == "scikit-learn Random Forest":
         meta_data = {
             "model": model,
-            "cat_names": [col for col in CONFIG['독립변수'] if CONFIG['데이터 유형'][col] == "범주형"],
-            "cont_names": [col for col in CONFIG['독립변수'] if CONFIG['데이터 유형'][col] == "숫자형"],
-            "y_names": CONFIG["종속변수"],
-            "procs": []  # scikit-learn에는 전처리 정보 없음
+            "cat_names": model.get("cat_names", []),  # 모델 내 저장된 cat_names 사용
+            "cont_names": model.get("cont_names", []),  # 모델 내 저장된 cont_names 사용
+            "y_names": model.get("y_names", []),  # 모델 내 저장된 y_names 사용
+            "procs": model.get("procs", [])  # 모델 내 저장된 procs 사용
         }
     elif MODEL_TYPE == "XGBoost":
         meta_data = {
             "model": model,
-            "cat_names": [col for col in CONFIG['독립변수'] if CONFIG['데이터 유형'][col] == "범주형"],
-            "cont_names": [col for col in CONFIG['독립변수'] if CONFIG['데이터 유형'][col] == "숫자형"],
-            "y_names": CONFIG["종속변수"],
-            "procs": ["Categorify", "Normalize"]
+            "cat_names": model.get("cat_names", []),  # 모델 내 저장된 cat_names 사용
+            "cont_names": model.get("cont_names", []),  # 모델 내 저장된 cont_names 사용
+            "y_names": model.get("y_names", []),  # 모델 내 저장된 y_names 사용
+            "procs": model.get("procs", [])  # 모델 내 저장된 procs 사용
         }
     else:
         st.error("Unsupported model type.")
