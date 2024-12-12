@@ -127,3 +127,63 @@ if st.button("Predict"):
         st.success(f"{y_name}: {prediction}")
     except Exception as e:
         st.error(f"Error during prediction: {e}")
+
+
+# 예측 결과에 따라 콘텐츠 표시
+if prediction:
+    if prediction <= 60000:
+        st.write("### Prediction Result: Low Price Segment")
+        col1, col2, col3 = st.columns(3)
+    
+        with col1:
+            st.image("https://via.placeholder.com/300", caption="Low Segment Image 1")
+            st.video("https://www.youtube.com/watch?v=dQw4w9WgXcQ")  # YouTube 썸네일
+            st.text("Description for Low Segment 1")
+    
+        with col2:
+            st.image("https://via.placeholder.com/300", caption="Low Segment Image 2")
+            st.video("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+            st.text("Description for Low Segment 2")
+    
+        with col3:
+            st.image("https://via.placeholder.com/300", caption="Low Segment Image 3")
+            st.video("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+            st.text("Description for Low Segment 3")
+    
+    elif 60000 < prediction <= 120000:
+        st.write("### Prediction Result: Medium Price Segment")
+        col1, col2, col3 = st.columns(3)
+    
+        with col1:
+            st.image("https://via.placeholder.com/300", caption="Medium Segment Image 1")
+            st.video("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+            st.text("Description for Medium Segment 1")
+    
+        with col2:
+            st.image("https://via.placeholder.com/300", caption="Medium Segment Image 2")
+            st.video("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+            st.text("Description for Medium Segment 2")
+    
+        with col3:
+            st.image("https://via.placeholder.com/300", caption="Medium Segment Image 3")
+            st.video("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+            st.text("Description for Medium Segment 3")
+    
+    else:
+        st.write("### Prediction Result: High Price Segment")
+        col1, col2, col3 = st.columns(3)
+    
+        with col1:
+            st.image("https://via.placeholder.com/300", caption="High Segment Image 1")
+            st.video("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+            st.text("Description for High Segment 1")
+    
+        with col2:
+            st.image("https://via.placeholder.com/300", caption="High Segment Image 2")
+            st.video("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+            st.text("Description for High Segment 2")
+    
+        with col3:
+            st.image("https://via.placeholder.com/300", caption="High Segment Image 3")
+            st.video("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+            st.text("Description for High Segment 3")
