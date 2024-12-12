@@ -105,7 +105,7 @@ if df is not None:
             for cat in model["cat_names"]:
                 if cat in cat_inputs:
                     category = cat_inputs[cat]
-                    encoded_value = categorify_maps[cat].o2i[category]  # 인코딩된 값 가져오기
+                     encoded_value = model["categorify_maps"][cat].o2i[category]
                     input_data.append(encoded_value)
                     
             for cont in model["cont_names"]:
