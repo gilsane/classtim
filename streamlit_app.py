@@ -94,4 +94,26 @@ if df is not None:
     else:
         st.error("The loaded model is not in the expected dictionary format.")
 
+    # 예측 버튼 및 결과 출력
+    if st.button("Predict"):
+        try:
+            # 입력 데이터 준비
+            input_data = []
+            for cat in model.cat_names:
+                if cat in cat_inputs:
+                    input_data.append(cat_inputs[cat])
+            for cont in model.cont_names:
+                if cont in cont_inputs:
+                    input_data.append(float(cont_inputs[cont]))  # 숫자로 변환
+
+            # 예측 수행
+            prediction = model["model"].predict([input_data])[0]
+
+            # 결과 출력
+            y_name = model.get("y_names", ["Prediction"])[0]
+            st.success(f"{y_name}: {prediction}")
+        except Exception as e:
+            st.error(f"Error during prediction: {e}")
+
+
 
